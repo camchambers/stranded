@@ -31,9 +31,42 @@ fn main() {
         println!("2. Drink water.");
         println!("3. Sleep");
 
+
         let mut input = String::new();
         std::io::stdin().read_line(&mut input).expect("Failed to read line");
         let input: u32 = input.trim().parse().expect("Please type a number!");
+
+        if input == 1 {
+            eat(&mut player);
+        } else if input == 2 {
+            drink(&mut player);
+        } else if input == 3 {
+            sleep(&mut player);
+        } else {
+            println!("Please enter a number between 1 and 10");
+        }
+    }
+
+    fn eat(player: &mut Survivor) {
+        player.hunger += 10.0;
+        player.water -= 10.0;
+        player.sanity -= 10.0;
+        println!("You ate some food.");
+    }
+
+    fn drink(player: &mut Survivor) {
+        player.water += 10.0;
+        player.hunger -= 10.0;
+        player.sanity -= 10.0;
+        println!("You drank some water.");
+    }
+
+    fn sleep(player: &mut Survivor) {
+        player.sleep += 10.0;
+        player.hunger -= 10.0;
+        player.water -= 10.0;
+        player.sanity -= 10.0;
+        println!("You slept for a bit.");
     }
 
 }
