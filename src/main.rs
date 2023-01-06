@@ -26,6 +26,9 @@ fn main() {
     println!("You woke up on a deserted island feeling dazed and confused.");
 
     while player.alive {
+
+        clear_screen();
+
         println!("What would you like to do?");
         println!("1. Eat food.");
         println!("2. Drink water.");
@@ -45,6 +48,7 @@ fn main() {
         } else {
             println!("Please enter a number between 1 and 10");
         }
+
     }
 
     fn eat(player: &mut Survivor) {
@@ -67,6 +71,15 @@ fn main() {
         player.water -= 10.0;
         player.sanity -= 10.0;
         println!("You slept for a bit.");
+    }
+
+    fn clear_screen() {
+        system_sleep();
+        print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
+    }
+
+    fn system_sleep(){
+        std::thread::sleep(std::time::Duration::from_millis(1000));
     }
 
 }
