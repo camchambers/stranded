@@ -11,6 +11,53 @@ struct Survivor {
     sanity: i32,
     alive: bool,
 }
+
+// an enum of player actions that can be taken
+enum Action {
+    Start,
+    Eat,
+    Drink,
+    Sleep,
+    Fight,
+    Flee,
+    Swim,
+    Die,
+}
+
+// a function called story_teller that takes a player struct and an action enum as parameters and returns as string
+fn story_teller(player: Survivor, action: Action) -> String {
+    let mut story = String::new();
+
+    match action {
+        Action::Start => {
+            story = format!("You woke up on a deserted island feeling dazed and confused.");
+        }
+        Action::Eat => {
+            story = format!("You ate some food.");
+        }
+        Action::Drink => {
+            story = format!("You drank some water.");
+        }
+        Action::Sleep => {
+            story = format!("You slept for {} minutes.", player.sleep);
+        }
+        Action::Fight => {
+            story = format!("You fought a wild animal.");
+        }
+        Action::Flee => {
+            story = format!("You fled from a wild animal.");
+        }
+        Action::Swim => {
+            story = format!("You swam in the ocean.");
+        }
+        Action::Die => {
+            story = format!("You died.");
+        }
+    }
+
+    story
+}
+
 fn main() {
     // instantiate the player struct with all values set to 100
     let mut player: Survivor = Survivor {
