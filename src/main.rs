@@ -24,8 +24,24 @@ enum Action {
     Die,
 }
 
-// a function called story_teller that takes a player struct and an action enum as parameters and returns as string
-fn story_teller(player: Survivor, action: Action) -> String {
+enum Actors {
+    None,
+    Bear,
+    Scorpion,
+}
+
+// A function for displaying the current state of the player
+fn display_player_stats(player: &mut Survivor) {
+    println!("Health: {}", player.health);
+    println!("Hunger: {}", player.hunger);
+    println!("Water: {}", player.water);
+    println!("Sleep: {}", player.sleep);
+    println!("Sanity: {}", player.sanity);
+    println!("");
+}
+
+// a function called story_teller that takes a player object and an action enum as parameters and returns as string
+fn story_teller(player: &mut Survivor, action: Action, target: Actors, value: i32) {
     let mut story = String::new();
 
     match action {
@@ -39,7 +55,11 @@ fn story_teller(player: Survivor, action: Action) -> String {
             story = format!("You drank some water.");
         }
         Action::Sleep => {
-            story = format!("You slept for {} minutes.", player.sleep);
+            if player.sleep > 60 {
+                story = format!("You slept for {} minutes. You clearly over slept.", value);
+            } else {
+                story = format!("You slept for {} minutes You feel well rested.", value);
+            }
         }
         Action::Fight => {
             story = format!("You fought a wild animal.");
@@ -54,8 +74,8 @@ fn story_teller(player: Survivor, action: Action) -> String {
             story = format!("You died.");
         }
     }
-
-    story
+    println!("{}", story);
+    println!("");
 }
 
 fn main() {
@@ -69,10 +89,13 @@ fn main() {
         alive: true,
     };
 
-    println!("You woke up on a deserted island feeling dazed and confused.");
+    story_teller(&mut player, Action::Start, Actors::None, 0);
+
 
     while player.alive {
         clear_screen();
+
+        display_player_stats(&mut player);
 
         println!("What would you like to do?");
         println!("1. Eat food.");
@@ -101,7 +124,6 @@ fn main() {
         player.water -= 10;
         player.sanity -= 10;
         println!("You ate some food.");
-        println!("");
     }
 
     fn drink(player: &mut Survivor) {
@@ -109,7 +131,6 @@ fn main() {
         player.hunger -= 10;
         player.sanity -= 10;
         println!("You drank some water.");
-        println!("");
     }
 
     fn sleep(player: &mut Survivor) {
@@ -119,8 +140,7 @@ fn main() {
         player.hunger -= 10;
         player.water -= 10;
         player.sanity -= 10;
-        println!("You slept for {} minutes.", sleep_amount);
-        println!("");
+        story_teller(player, Action::Sleep, Actors::None, sleep_amount);
     }
 
     fn clear_screen() {
@@ -129,6 +149,6 @@ fn main() {
     }
 
     fn system_sleep() {
-        std::thread::sleep(std::time::Duration::from_millis(1000));
+        std::thread::sleep(std::time::Duration::from_millis(3000));
     }
 }
