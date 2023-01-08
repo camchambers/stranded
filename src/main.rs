@@ -35,7 +35,7 @@ enum Actors {
 fn display_player_stats(player: &mut Survivor) {
     println!("");
     println!(
-        "\t ❤️‍🩹 {health} \t 🍲 {hunger} \t 💧 {water} \t 🛌 {sleep} \t 🧠 {sanity}",
+        "\t ❤️‍🩹 {health}   🍲 {hunger}   💧 {water}   🛌 {sleep}   🧠 {sanity}",
         health = player.health,
         hunger = player.hunger,
         water = player.water,
