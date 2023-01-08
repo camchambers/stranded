@@ -30,13 +30,18 @@ enum Actors {
     Scorpion,
 }
 
+
 // A function for displaying the current state of the player
 fn display_player_stats(player: &mut Survivor) {
-    println!("Health: {}", player.health);
-    println!("Hunger: {}", player.hunger);
-    println!("Water: {}", player.water);
-    println!("Sleep: {}", player.sleep);
-    println!("Sanity: {}", player.sanity);
+    println!("");
+    println!(
+        "\t ❤️‍🩹 {health} \t 🍲 {hunger} \t 💧 {water} \t 🛌 {sleep} \t 🧠 {sanity}",
+        health = player.health,
+        hunger = player.hunger,
+        water = player.water,
+        sleep = player.sleep,
+        sanity = player.sanity
+    );
     println!("");
 }
 
@@ -91,16 +96,17 @@ fn main() {
 
     story_teller(&mut player, Action::Start, Actors::None, 0);
 
-
     while player.alive {
         clear_screen();
 
         display_player_stats(&mut player);
 
-        println!("What would you like to do?");
-        println!("1. Eat food.");
-        println!("2. Drink water.");
+        println!("What would you like to do? \n");
+        println!("1. Search for food.");
+        println!("2. Search for water.");
         println!("3. Sleep");
+
+        println!("");
 
         let mut input = String::new();
         std::io::stdin()
