@@ -16,7 +16,7 @@ struct Survivor {
 fn display_player_stats(player: &mut Survivor) {
     println!("");
     println!(
-        "\t ❤️‍🩹 {health}   🍲 {hunger}   💧 {water}   🛌 {sleep}   🧠 {sanity}",
+        "\t 🤎 {health}   🍲 {hunger}   💧 {water}   🛌 {sleep}   🧠 {sanity}",
         health = player.health,
         hunger = player.hunger,
         water = player.water,
