@@ -12,25 +12,6 @@ struct Survivor {
     alive: bool,
 }
 
-// an enum of player actions that can be taken
-enum Action {
-    Start,
-    Eat,
-    Drink,
-    Sleep,
-    Fight,
-    Flee,
-    Swim,
-    Die,
-}
-
-enum Actors {
-    None,
-    Bear,
-    Scorpion,
-}
-
-
 // A function for displaying the current state of the player
 fn display_player_stats(player: &mut Survivor) {
     println!("");
@@ -45,44 +26,6 @@ fn display_player_stats(player: &mut Survivor) {
     println!("");
 }
 
-// a function called story_teller that takes a player object and an action enum as parameters and returns as string
-fn story_teller(player: &mut Survivor, action: Action, target: Actors, value: i32) {
-    let mut story = String::new();
-
-    match action {
-        Action::Start => {
-            story = format!("You woke up on a deserted island feeling dazed and confused.");
-        }
-        Action::Eat => {
-            story = format!("You ate some food.");
-        }
-        Action::Drink => {
-            story = format!("You drank some water.");
-        }
-        Action::Sleep => {
-            if player.sleep > 60 {
-                story = format!("You slept for {} minutes. You clearly over slept.", value);
-            } else {
-                story = format!("You slept for {} minutes You feel well rested.", value);
-            }
-        }
-        Action::Fight => {
-            story = format!("You fought a wild animal.");
-        }
-        Action::Flee => {
-            story = format!("You fled from a wild animal.");
-        }
-        Action::Swim => {
-            story = format!("You swam in the ocean.");
-        }
-        Action::Die => {
-            story = format!("You died.");
-        }
-    }
-    println!("{}", story);
-    println!("");
-}
-
 fn main() {
     // instantiate the player struct with all values set to 100
     let mut player: Survivor = Survivor {
@@ -93,8 +36,6 @@ fn main() {
         sanity: 100,
         alive: true,
     };
-
-    story_teller(&mut player, Action::Start, Actors::None, 0);
 
     while player.alive {
         clear_screen();
@@ -141,12 +82,12 @@ fn main() {
 
     fn sleep(player: &mut Survivor) {
         // generate a random number between 1 and 10
-        let sleep_amount = rand::thread_rng().gen_range(1..500);
+        let sleep_amount = rand::thread_rng().gen_range(0..8);
         player.sleep += sleep_amount;
         player.hunger -= 10;
         player.water -= 10;
         player.sanity -= 10;
-        story_teller(player, Action::Sleep, Actors::None, sleep_amount);
+        println!("You slept for {} hour(s).", sleep_amount);
     }
 
     fn clear_screen() {
