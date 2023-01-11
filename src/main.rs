@@ -81,12 +81,13 @@ fn main() {
     }
 
     fn sleep(player: &mut Survivor) {
+
         // generate a random number between 1 and 10
-        let sleep_amount = rand::thread_rng().gen_range(0..8);
+        let sleep_amount = rand::thread_rng().gen_range(0..12);
         player.sleep += sleep_amount;
-        player.hunger -= 10;
-        player.water -= 10;
-        player.sanity -= 10;
+        player.hunger -= (sleep_amount * 2) - rand::thread_rng().gen_range(0..5);
+        player.water -= (sleep_amount * 2) - rand::thread_rng().gen_range(0..5);
+        player.sanity += rand::thread_rng().gen_range(0..5);
         println!("You slept for {} hour(s).", sleep_amount);
     }
 
