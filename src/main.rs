@@ -12,6 +12,24 @@ struct Survivor {
     alive: bool,
 }
 
+// Survivor implementation
+impl Survivor {
+    fn new() -> Survivor {
+        Survivor {
+            health: 100,
+            hunger: 100,
+            water: 100,
+            sleep: 100,
+            sanity: 100,
+            alive: true,
+        }
+    }
+
+    // To do:
+    // move survivor related functions here
+
+}
+
 // A function for displaying the current state of the player
 fn display_player_stats(player: &mut Survivor) {
     println!("");
