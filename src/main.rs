@@ -25,9 +25,20 @@ impl Survivor {
         }
     }
 
-    // To do:
-    // move survivor related functions here
+    fn eat(&mut self) {
+        self.hunger += 10;
+        self.water -= 10;
+    }
 
+    fn drink(&mut self) {
+        self.water += 10;
+        self.hunger -= 10;
+    }
+
+    fn sleep(&mut self) {
+        self.sleep += 10;
+        self.sanity -= 10;
+    }
 }
 
 // A function for displaying the current state of the player
@@ -45,15 +56,15 @@ fn display_player_stats(player: &mut Survivor) {
 }
 
 fn main() {
-   
     // create a new survivor called player
-    let mut player = Survivor::new();   
+    let mut player = Survivor::new();
 
     while player.alive {
         clear_screen();
 
         display_player_stats(&mut player);
 
+        // TODO: Convert this to a function
         println!("What would you like to do? \n");
         println!("1. Search for food.");
         println!("2. Search for water.");
@@ -68,39 +79,14 @@ fn main() {
         let input: u32 = input.trim().parse().expect("Please type a number!");
 
         if input == 1 {
-            eat(&mut player);
+            player.eat();
         } else if input == 2 {
-            drink(&mut player);
+            player.drink();
         } else if input == 3 {
-            sleep(&mut player);
+            player.sleep();
         } else {
-            println!("Please enter a number between 1 and 10");
+            println!("Please enter a valid number.");
         }
-    }
-
-    fn eat(player: &mut Survivor) {
-        player.hunger += 10;
-        player.water -= 10;
-        player.sanity -= 10;
-        println!("You ate some food.");
-    }
-
-    fn drink(player: &mut Survivor) {
-        player.water += 10;
-        player.hunger -= 10;
-        player.sanity -= 10;
-        println!("You drank some water.");
-    }
-
-    fn sleep(player: &mut Survivor) {
-
-        // generate a random number between 1 and 10
-        let sleep_amount = rand::thread_rng().gen_range(0..12);
-        player.sleep += sleep_amount;
-        player.hunger -= (sleep_amount * 2) - rand::thread_rng().gen_range(0..5);
-        player.water -= (sleep_amount * 2) - rand::thread_rng().gen_range(0..5);
-        player.sanity += rand::thread_rng().gen_range(0..5);
-        println!("You slept for {} hour(s).", sleep_amount);
     }
 
     fn clear_screen() {
