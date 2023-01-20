@@ -45,15 +45,9 @@ fn display_player_stats(player: &mut Survivor) {
 }
 
 fn main() {
-    // instantiate the player struct with all values set to 100
-    let mut player: Survivor = Survivor {
-        health: 100,
-        hunger: 100,
-        water: 100,
-        sleep: 100,
-        sanity: 100,
-        alive: true,
-    };
+   
+    // create a new survivor called player
+    let mut player = Survivor::new();   
 
     while player.alive {
         clear_screen();
