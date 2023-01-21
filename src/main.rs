@@ -28,16 +28,19 @@ impl Survivor {
     fn eat(&mut self) {
         self.hunger += 10;
         self.water -= 10;
+        print!("You ate some food.");
     }
 
     fn drink(&mut self) {
         self.water += 10;
         self.hunger -= 10;
+        print!("You drank some water.");
     }
 
     fn sleep(&mut self) {
         self.sleep += 10;
         self.sanity -= 10;
+        print!("You slept for a while.");
     }
 }
 
@@ -55,6 +58,21 @@ fn display_player_stats(player: &mut Survivor) {
     println!("");
 }
 
+// a function for getting the player's  input
+fn get_player_action() -> String {
+    println!("What would you like to do? \n");
+    println!("1. Search for food.");
+    println!("2. Search for water.");
+    println!("3. Sleep");
+    println!("");
+
+    let mut input = String::new();
+    std::io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read line");
+    input.trim().to_string()
+}
+
 fn main() {
     // create a new survivor called player
     let mut player = Survivor::new();
@@ -64,28 +82,16 @@ fn main() {
 
         display_player_stats(&mut player);
 
-        // TODO: Convert this to a function
-        println!("What would you like to do? \n");
-        println!("1. Search for food.");
-        println!("2. Search for water.");
-        println!("3. Sleep");
+        let action = get_player_action();
 
-        println!("");
-
-        let mut input = String::new();
-        std::io::stdin()
-            .read_line(&mut input)
-            .expect("Failed to read line");
-        let input: u32 = input.trim().parse().expect("Please type a number!");
-
-        if input == 1 {
+        if action == "1" {
             player.eat();
-        } else if input == 2 {
+        }else if action == "2"{
             player.drink();
-        } else if input == 3 {
+        }else if action == "3"{
             player.sleep();
-        } else {
-            println!("Please enter a valid number.");
+        }else {
+            println!("Please enter a valid choice.");
         }
     }
 
