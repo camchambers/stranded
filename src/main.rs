@@ -1,6 +1,7 @@
 /**
  * A text-based game where you try to survive on an island with limited resources.
  */
+use std::io::{self, Write};
 use rand::Rng;
 
 struct Survivor {
@@ -28,19 +29,19 @@ impl Survivor {
     fn eat(&mut self) {
         self.hunger += 10;
         self.water -= 10;
-        print!("You ate some food.");
+        println!("You ate some food.");
     }
 
     fn drink(&mut self) {
         self.water += 10;
         self.hunger -= 10;
-        print!("You drank some water.");
+        println!("You drank some water.");
     }
 
     fn sleep(&mut self) {
         self.sleep += 10;
         self.sanity -= 10;
-        print!("You slept for a while.");
+        println!("You slept for a while.");
     }
 }
 
@@ -64,8 +65,10 @@ fn get_player_action() -> String {
     println!("1. Search for food.");
     println!("2. Search for water.");
     println!("3. Sleep");
-    println!("");
-
+    println!();
+    print!(">> ");
+    let _ = io::stdout().flush();
+    
     let mut input = String::new();
     std::io::stdin()
         .read_line(&mut input)
