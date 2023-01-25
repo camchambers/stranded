@@ -1,8 +1,8 @@
+use rand::Rng;
 /**
  * A text-based game where you try to survive on an island with limited resources.
  */
 use std::io::{self, Write};
-use rand::Rng;
 
 struct Survivor {
     health: i32,
@@ -43,20 +43,18 @@ impl Survivor {
         self.sanity -= 10;
         println!("You slept for a while.");
     }
-}
 
-// A function for displaying the current state of the player
-fn display_player_stats(player: &mut Survivor) {
-    println!("");
-    println!(
-        "\t 🤎 {health}   🍲 {hunger}   💧 {water}   🛌 {sleep}   🧠 {sanity}",
-        health = player.health,
-        hunger = player.hunger,
-        water = player.water,
-        sleep = player.sleep,
-        sanity = player.sanity
-    );
-    println!("");
+    fn display_stats(&self) {
+        println!(
+            "\t 🤎 {health}   🍲 {hunger}   💧 {water}   🛌 {sleep}   🧠 {sanity}",
+            health = self.health,
+            hunger = self.hunger,
+            water = self.water,
+            sleep = self.sleep,
+            sanity = self.sanity
+        );
+        println!("");
+    }
 }
 
 // a function for getting the player's  input
@@ -68,7 +66,7 @@ fn get_player_action() -> String {
     println!();
     print!(">> ");
     let _ = io::stdout().flush();
-    
+
     let mut input = String::new();
     std::io::stdin()
         .read_line(&mut input)
@@ -83,17 +81,17 @@ fn main() {
     while player.alive {
         clear_screen();
 
-        display_player_stats(&mut player);
+        player.display_stats();
 
         let action = get_player_action();
 
         if action == "1" {
             player.eat();
-        }else if action == "2"{
+        } else if action == "2" {
             player.drink();
-        }else if action == "3"{
+        } else if action == "3" {
             player.sleep();
-        }else {
+        } else {
             println!("Please enter a valid choice.");
         }
     }
